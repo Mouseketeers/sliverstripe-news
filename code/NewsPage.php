@@ -11,7 +11,10 @@ class NewsPage extends Page {
 	static $allowed_children = 'none';
 	static $can_be_root = false;
 	static $default_sort = 'FromDate DESC';
-	static $defaults = array('ShowInMenus' => false);
+	static $defaults = array(
+		'ShowInMenus' => false,
+		'FromDate' => 'now'
+	);
 	
 	function getCMSFields() {
 		$fields = parent::getCMSFields();
@@ -26,6 +29,5 @@ class NewsPage_Controller extends Page_Controller {
 	public function OtherNews($num=10) {
 		return DataObject::get('NewsPage', '`NewsPage`.`ID` <> '.$this->ID.' AND (FromDate IS NULL OR FromDate <= NOW()) AND (ToDate IS NULL OR ToDate >= NOW())', 'FromDate DESC', '', $num);
 	}
-
 }
 ?>
