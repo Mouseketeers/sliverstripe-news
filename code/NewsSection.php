@@ -4,7 +4,7 @@ class NewsSection extends Page {
 	static $has_one = array();
 	//static $allowed_children = array("NewsPage");
  	static $default_child = "NewsPage";
- 	static $icon  = 'news/images/news-section';
+ 	static $icon  = 'news/images/news_section';
 }
 class NewsSection_Controller extends Page_Controller {
 	public function News($limit=10) {
