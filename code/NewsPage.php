@@ -26,7 +26,7 @@ class NewsPage extends Page {
 	}
 }
 class NewsPage_Controller extends Page_Controller {
-	public function OtherNews($num=10) {
+	public function OtherNews($num='') {
 		return DataObject::get('NewsPage', '`NewsPage`.`ID` <> '.$this->ID.' AND (FromDate IS NULL OR FromDate <= NOW()) AND (ToDate IS NULL OR ToDate >= NOW())', 'FromDate DESC', '', $num);
 	}
 }
