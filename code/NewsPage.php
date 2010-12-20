@@ -29,7 +29,6 @@ class NewsPage extends Page {
 				$cms_label = _t('NewsPage.TO','To')),
 			$place_before = 'Content'
 		);
-		$fields->removeFieldFromTab("Root.Content.Main","MenuTitle");
 		return $fields;
 	}
 }
