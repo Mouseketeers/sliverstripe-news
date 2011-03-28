@@ -14,19 +14,22 @@ class NewsPage extends Page {
 		'FromDate' => 'now'
 	);
 	function getCMSFields() {
+		
+		$from_date_field = new DateField('FromDate', _t('NewsPage.FROM','From'));
+		$from_date_field->setConfig('showcalendar',true);
+		
+		$to_date_field = new DateField('ToDate', _t('NewsPage.TO','To'));
+		$to_date_field->setConfig('showcalendar',true);
+		
 		$fields = parent::getCMSFields();
 		$fields->addFieldToTab(
 			$tab = 'Root.Content.Main',
-			new CalendarDateField(
-				$db_name = 'FromDate',
-				$cms_label = _t('NewsPage.FROM','From')),
+			$from_date_field,
 			$place_before = 'Content'
 		);
 		$fields->addFieldToTab(
 			$tab = 'Root.Content.Main',
-			new CalendarDateField(
-				$db_name = 'ToDate',
-				$cms_label = _t('NewsPage.TO','To')),
+			$to_date_field,
 			$place_before = 'Content'
 		);
 		return $fields;
