@@ -50,7 +50,7 @@ class NewsSection_Controller extends Page_Controller {
 		}
 		$filter = 'ParentID = '. $this->ID;
 		if ($this->ExcludeOutdatedNews) $filter .= ' AND (FromDate IS NULL OR FromDate <= NOW()) AND (ToDate IS NULL OR ToDate >= NOW())';
-		$data = DataObject::get('NewsPage', $filter, $this->SortOrder,'',$limit);
+		$data = DataObject::get('NewsPage', $filter, 'FromDate DESC','',$limit);
 		return $data;
 	}
 }
