@@ -7,4 +7,5 @@ $Content
 	<p>$NewsImage.SetWidth(80)$Content.firstParagraph</p>
 	<p><a href="$Link" class="ReadMore">Read more</a></p>
 </div>
+<% include Pagination %>
 <% end_control %>

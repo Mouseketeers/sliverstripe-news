@@ -2,7 +2,11 @@
 class NewsPage extends Page {
 	static $db = array(
 		'FromDate' => 'Date',
-		'ToDate' => 'Date'
+		'ToDate' => 'Date',
+		'Abstract' => 'Text'
+	);
+	static $has_one = array(
+		'Image' => 'Image'
 	);
 	static $icon  = 'news/images/news';
 	static $default_parent = 'NewsSection';
@@ -22,6 +26,8 @@ class NewsPage extends Page {
 		$to_date_field->setConfig('showcalendar',true);
 		
 		$fields = parent::getCMSFields();
+		
+		$fields->addFieldToTab('Root.Content.Main',new TextareaField('Abstract','Abstract'),'Content');
 		$fields->addFieldToTab(
 			$tab = 'Root.Content.Main',
 			$from_date_field,
@@ -32,6 +38,7 @@ class NewsPage extends Page {
 			$to_date_field,
 			$place_before = 'Content'
 		);
+		//$fields->addFieldToTab('Root.Content.Main',new ImageUploadField('Image','Image'));
 		return $fields;
 	}
 }
