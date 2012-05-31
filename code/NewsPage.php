@@ -12,7 +12,7 @@ class NewsPage extends Page {
 	static $default_parent = 'NewsSection';
 	static $allowed_children = 'none';
 	static $can_be_root = false;
-	static $default_sort = 'Sort DESC';
+	static $default_sort = 'FromDate DESC';
 	static $defaults = array(
 		'ShowInMenus' => false,
 		'FromDate' => 'now'
