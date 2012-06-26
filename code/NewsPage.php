@@ -41,6 +41,9 @@ class NewsPage extends Page {
 		//$fields->addFieldToTab('Root.Content.Main',new ImageUploadField('Image','Image'));
 		return $fields;
 	}
+	public function DateAndTitle() {
+		return $this->FromDate . ' - ' . $this->Title;
+	}
 }
 class NewsPage_Controller extends Page_Controller {
 	public function OtherNews($limit='') {
