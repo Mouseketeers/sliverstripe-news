@@ -1,11 +1,16 @@
 <h1>$Title</h1>
 $Content
-<% control News %>
-<div id="NewsItem">
-	<p class="date">$FromDate.Long</p>
-	<h2>$Title</h2>
-	<p>$NewsImage.SetWidth(80)$Content.firstParagraph</p>
-	<p><a href="$Link" class="ReadMore">Read more</a></p>
+<div id="ContentList">
+	<% if ContentList %>
+	<% control ContentList %>
+	<% cached 'NewsPage', ID, Updated %>
+	<div class="news listItem clickable" onclick="location.href='$Link'">
+		<% if FromDate %><span class="date">$FromDate.FormatI18N(%e. %B %Y)</span><% end_if %>
+		<h2><a href="$link">$Title</a></h2>
+		<p><% if Abstract %>$Abstract<% else %>$Content.Summary<% end_if %></p>
+	</div>
+	<% end_cached %>
+	<% end_control %>
+	<% include Pagination %>
+	<% end_if %>
 </div>
-<% include Pagination %>
-<% end_control %>
