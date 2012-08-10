@@ -26,7 +26,7 @@ class NewsWidget extends Widget {
  		return $data;
 	}
 	function Title() {
-		return $this->WidgetTitle ? $this->WidgetTitle : self::$title;
+		return $this->WidgetTitle;
 	}
 	function NoNewsMessage() {
 		return $this->NoNewsMessage;
