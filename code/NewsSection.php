@@ -15,7 +15,14 @@ class NewsSection extends Page {
  	static $icon  = 'news/images/news_section';
  	static $num_pages_options = array(
 		0 => 'All',
+		2 => '2',
+		3 => '3',
+		4 => '4',
 		5 => '5',
+		6 => '6',
+		7 => '7',
+		8 => '8',
+		9 => '9',
 		10 => '10',
 		15 => '15',
 		20 => '20',
@@ -68,9 +75,13 @@ class NewsSection_Controller extends Page_Controller {
 		else {
 			$filter = 'ParentID = '. $this->ID;	
 		}
-		if ($this->ExcludeOutdatedNews) $filter .= ' AND (FromDate IS NULL OR FromDate <= NOW()) AND (ToDate IS NULL OR ToDate >= NOW())';
+		$filter .= ' AND (FromDate IS NULL OR FromDate <= NOW())';
+		if ($this->ExcludeOutdatedNews) $filter .= ' AND (ToDate IS NULL OR ToDate >= NOW())';
 		$data = DataObject::get('NewsPage', $filter, 'FromDate DESC','',$limit);
 		return $data;
+	}
+	public function IsFirstPage() {
+		return ($this->request->getVar('start') == 0);
 	}
 	function getAllChildren($objectType = null, $parentObject = null, $dataSet = null) {
       if ($parentObject == null) {

@@ -17,6 +17,28 @@ class NewsPage extends Page {
 		'ShowInMenus' => false,
 		'FromDate' => 'now'
 	);
+	static $default_upload_folder = 'News';
+	static $api_access = array (
+		'view' => array(
+			'ID',
+			'Title',
+			'Content',
+			'Abstract',
+			'ResizedImage',
+			'FromDate',
+			'ToDate'
+		)
+	);
+	function canView($member = null) {
+		if(Permission::checkMember($member, 'ADMIN')) {
+			return true;
+		}
+		$now = strtotime('now');
+		if($this->FromDate && strtotime($this->FromDate) >= $now || $this->ToDate && strtotime($this->ToDate) <= $now) {
+			return false;
+		}
+		return true;
+	}
 	function getCMSFields() {
 		
 		$from_date_field = new DateField('FromDate', _t('NewsPage.FROM','From'));
@@ -38,11 +60,22 @@ class NewsPage extends Page {
 			$to_date_field,
 			$place_before = 'Content'
 		);
-		//$fields->addFieldToTab('Root.Content.Main',new ImageUploadField('Image','Image'));
+		//$fields->addFieldToTab('Root.Content.Image',new ImageUploadField('Image','Image'));
 		return $fields;
 	}
 	public function DateAndTitle() {
 		return $this->FromDate . ' - ' . $this->Title;
+	}
+	public function getRestfulSearchContext() {
+		if (!class_exists('DateFilter')) return $this->getDefaultSearchContext();
+		return new SearchContext(
+			$this->class,
+			null,
+			array(
+				'FromDate' => new DateFilter('FromDate'),
+				'ToDate' => new DateFilter('ToDate')
+			)
+		);
 	}
 }
 class NewsPage_Controller extends Page_Controller {

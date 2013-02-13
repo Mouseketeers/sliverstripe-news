@@ -11,3 +11,6 @@ public function NewsWidget() {
     $widget->NoNewsMessage = 'Sorry, currently no news';
     return $widget->renderWith("WidgetHolder");
 }
+
+To include the news widget, add this to the template:
+$NewsWidget
