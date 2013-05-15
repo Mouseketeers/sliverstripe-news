@@ -12,23 +12,12 @@ class NewsPage extends Page {
 	static $default_parent = 'NewsSection';
 	static $allowed_children = 'none';
 	static $can_be_root = false;
-	static $default_sort = 'FromDate DESC';
+	static $default_sort = 'FromDate DESC, Sort';
 	static $defaults = array(
 		'ShowInMenus' => false,
 		'FromDate' => 'now'
 	);
 	static $default_upload_folder = 'News';
-	static $api_access = array (
-		'view' => array(
-			'ID',
-			'Title',
-			'Content',
-			'Abstract',
-			'ResizedImage',
-			'FromDate',
-			'ToDate'
-		)
-	);
 	function canView($member = null) {
 		if(Permission::checkMember($member, 'ADMIN')) {
 			return true;
