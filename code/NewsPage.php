@@ -17,6 +17,12 @@ class NewsPage extends Page {
 		'ShowInMenus' => false,
 		'FromDate' => 'now'
 	);
+	static $international_date_formats = array(
+		'da_DK' => '%e. %B %Y',
+		'se_SE' => '%e. %B %Y',
+		'de_DE' => '%e. %B %Y',
+		'default' => '%e %B %Y'
+	);
 	function getCMSFields() {
 		
 		$from_date_field = new DateField('FromDate', _t('NewsPage.FROM','From'));
@@ -43,6 +49,15 @@ class NewsPage extends Page {
 	}
 	public function DateAndTitle() {
 		return $this->FromDate . ' - ' . $this->Title;
+	}
+	public function InternationalDate($DateDBName = 'FromDate') {
+		$date_obj = $this->dbObject($DateDBName);
+		if($date_obj->value) {
+			$date_formats = self::$international_date_formats;
+			$locale = i18n::get_locale();
+			$date_format = isset($date_formats[$locale]) ? $date_formats[$locale] : $date_formats['default'];
+			return $date_obj->FormatI18N($date_format);
+		};
 	}
 }
 class NewsPage_Controller extends Page_Controller {
