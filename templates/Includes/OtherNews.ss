@@ -1,10 +1,13 @@
 <% if OtherNews %>
-<div id="OtherNews">
 	<h2>More news</h2>
-	<% control OtherNews %>
-		<% if FromDate %><p class="date">$FromDate.Long</p><% end_if %>
-		<p><a href="$Link">$Title</a></p>
-	</div>
+	<div class="content-list">
+		<% control OtherNews %>
+		<div class="content-item">
+			<a href="$Link" class="link-block">
+				<h3>$Title</h3>
+				<% if FromDate %><p class="date"><strong>NEWS</strong> $FromDate.Long</p><% end_if %>
+			</a>
+		</div>
 	<% end_control %>
 </div>
 <% end_if %>
