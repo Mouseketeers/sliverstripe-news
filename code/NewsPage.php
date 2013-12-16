@@ -12,7 +12,7 @@ class NewsPage extends Page {
 	static $default_parent = 'NewsSection';
 	static $allowed_children = 'none';
 	static $can_be_root = false;
-	static $default_sort = 'FromDate DESC';
+	static $default_sort = 'FromDate DESC, Sort';
 	static $defaults = array(
 		'ShowInMenus' => false,
 		'FromDate' => 'now'
@@ -23,6 +23,17 @@ class NewsPage extends Page {
 		'de_DE' => '%e. %B %Y',
 		'default' => '%e %B %Y'
 	);
+	static $default_upload_folder = 'News';
+	function canView($member = null) {
+		if(Permission::checkMember($member, 'ADMIN')) {
+			return true;
+		}
+		$now = strtotime('now');
+		if($this->FromDate && strtotime($this->FromDate) >= $now || $this->ToDate && strtotime($this->ToDate) <= $now) {
+			return false;
+		}
+		return true;
+	}
 	function getCMSFields() {
 		
 		$from_date_field = new DateField('FromDate', _t('NewsPage.FROM','From'));
@@ -58,6 +69,17 @@ class NewsPage extends Page {
 			$date_format = isset($date_formats[$locale]) ? $date_formats[$locale] : $date_formats['default'];
 			return $date_obj->FormatI18N($date_format);
 		};
+	}
+	public function getRestfulSearchContext() {
+		if (!class_exists('DateFilter')) return $this->getDefaultSearchContext();
+		return new SearchContext(
+			$this->class,
+			null,
+			array(
+				'FromDate' => new DateFilter('FromDate'),
+				'ToDate' => new DateFilter('ToDate')
+			)
+		);
 	}
 }
 class NewsPage_Controller extends Page_Controller {
