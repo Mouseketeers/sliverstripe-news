@@ -34,12 +34,12 @@ class NewsList extends DataObjectDecorator {
 		}
 	}
 	public function News() {
-		$where = 'FromDate IS NULL OR FromDate <= NOW()';
+		$where = '(FromDate IS NULL OR FromDate <= NOW()) AND (ToDate IS NULL OR ToDate >= NOW())';
 		$newsSections = $this->owner->NewsSections();
 		if($newsSections->Count()) {
 			$where .= ' AND ParentID NOT IN ('.implode(',',$newsSections->column('ID')).')';
 		}
-		$data = DataObject::get('NewsPage', $where, 'FromDate DESC', '', $this->owner->NewsListLength);
+		$data = DataObject::get('NewsPage', $where, '', '', $this->owner->NewsListLength);
  		return $data;
 	}
 }

@@ -77,7 +77,7 @@ class NewsSection_Controller extends Page_Controller {
 		}
 		$filter .= ' AND (FromDate IS NULL OR FromDate <= NOW())';
 		if ($this->ExcludeOutdatedNews) $filter .= ' AND (ToDate IS NULL OR ToDate >= NOW())';
-		$data = DataObject::get('NewsPage', $filter, 'FromDate DESC','',$limit);
+		$data = DataObject::get('NewsPage', $filter, '', '',$limit);
 		return $data;
 	}
 	public function IsFirstPage() {

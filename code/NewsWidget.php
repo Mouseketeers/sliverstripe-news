@@ -22,7 +22,7 @@ class NewsWidget extends Widget {
 	}
 	function News($num='',$parentID=''){
 		$num = $num ? $num : $this->NumberToShow;
-		$data = DataObject::get('NewsPage', 'FromDate IS NULL OR FromDate <= NOW()', 'FromDate DESC', '', $num);
+		$data = DataObject::get('NewsPage', 'FromDate IS NULL OR FromDate <= NOW()', '', '', $num);
  		return $data;
 	}
 	function Title() {

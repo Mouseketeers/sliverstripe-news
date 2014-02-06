@@ -12,7 +12,7 @@ class NewsPage extends Page {
 	static $default_parent = 'NewsSection';
 	static $allowed_children = 'none';
 	static $can_be_root = false;
-	static $default_sort = 'FromDate DESC, Sort';
+	static $default_sort = 'FromDate DESC, Sort DESC';
 	static $defaults = array(
 		'ShowInMenus' => false,
 		'FromDate' => 'now'
@@ -87,8 +87,7 @@ class NewsPage_Controller extends Page_Controller {
 		$filter = '`NewsPage`.`ID` <> '.$this->ID
 			.' AND ParentID = '.$this->ParentID
 			.' AND (FromDate IS NULL OR FromDate <= NOW()) AND (ToDate IS NULL OR ToDate >= NOW())';
-		$sortorder = 'FromDate DESC';
-		return DataObject::get('NewsPage', $filter, $sortorder, '', $limit);
+		return DataObject::get('NewsPage', $filter, '', '', $limit);
 	}
 }
 ?>
