@@ -24,18 +24,7 @@ class NewsPage extends Page {
 		'default' => '%e %B %Y'
 	);
 	static $default_upload_folder = 'News';
-	function canView($member = null) {
-		if(Permission::checkMember($member, 'ADMIN')) {
-			return true;
-		}
-		$now = strtotime('now');
-		if($this->FromDate && strtotime($this->FromDate) >= $now || $this->ToDate && strtotime($this->ToDate) <= $now) {
-			return false;
-		}
-		return true;
-	}
 	function getCMSFields() {
-		
 		$from_date_field = new DateField('FromDate', _t('NewsPage.FROM','From'));
 		$from_date_field->setConfig('showcalendar',true);
 		
@@ -55,7 +44,6 @@ class NewsPage extends Page {
 			$to_date_field,
 			$place_before = 'Content'
 		);
-		//$fields->addFieldToTab('Root.Content.Main',new ImageUploadField('Image','Image'));
 		return $fields;
 	}
 	public function DateAndTitle() {
