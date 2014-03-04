@@ -8,7 +8,7 @@ class NewsWidget extends Widget {
 	static $defaults = array(
 		'WidgetTitle' => 'Latest news',
 		'NumberToShow' => 5,
-		'NoNewsMessage' => 'There is currently no news'
+		'NoNewsMessage' => 'There are currently no news'
 	);
 	static $title = 'Latest News';
 	static $cmsTitle = 'Latest News';

@@ -5,7 +5,8 @@ class NewsList extends DataObjectDecorator {
 			'db' => array(
 				'NewsListHeadline' => 'Varchar',
 				'NewsListLength' => 'Int',
-				'NewsListNoNewsMessage' => 'Varchar'
+				'NewsListNoNewsMessage' => 'Varchar',
+				'ShowNewsList' => 'Boolean'
 			),
 			'many_many' => array(
 				'NewsSections' => 'NewsSection'
@@ -13,7 +14,8 @@ class NewsList extends DataObjectDecorator {
 			'defaults' => array(
 				'NewsListHeadline' => 'Latest news',
 				'NewsListLength' => 5,
-				'NewsListNoNewsMessage' => 'There are currently no news'
+				'NewsListNoNewsMessage' => 'There are currently no news',
+				'ShowNewsList' => 1
 			)
 		);
 	}
@@ -21,6 +23,7 @@ class NewsList extends DataObjectDecorator {
 		$newSections = DataObject::get('NewsSection');
 		if($newSections) {
 			$fields->addFieldsToTab( 'Root.Content.News', array(
+				new CheckboxField('ShowNewsList','Show news list'),
 				new TextField('NewsListHeadline', 'Headline (e.g. Latest news)'),
 				new TextField('NewsListLength', 'Number of news to list'),
 				new TextField('NewsListNoNewsMessage', 'Message to show when there are no news'),

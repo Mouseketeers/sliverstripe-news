@@ -1,3 +1,4 @@
+<% if ShowNewsList %>
 <div id="news-widget">
 	<h2>$NewsListHeadline</h2>
 	<% if News %>
@@ -16,3 +17,4 @@
 	<p>$NewsListNoNewsMessage</p>
 	<% end_if %>
 </div>
+<% end_if %>
