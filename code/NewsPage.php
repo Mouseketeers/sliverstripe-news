@@ -6,7 +6,8 @@ class NewsPage extends Page {
 		'Abstract' => 'Text'
 	);
 	static $has_one = array(
-		'Image' => 'Image'
+		'Image' => 'Image',
+		'NewsDocument' => 'File'
 	);
 	static $icon  = 'news/images/news';
 	static $default_parent = 'NewsSection';
@@ -23,13 +24,16 @@ class NewsPage extends Page {
 		'de_DE' => '%e. %B %Y',
 		'default' => '%e %B %Y'
 	);
-	static $default_upload_folder = 'News';
+	static $file_upload_folder = 'News';
 	function getCMSFields() {
 		$from_date_field = new DateField('FromDate', _t('NewsPage.FROM','From'));
 		$from_date_field->setConfig('showcalendar',true);
 		
 		$to_date_field = new DateField('ToDate', _t('NewsPage.TO','To'));
 		$to_date_field->setConfig('showcalendar',true);
+
+		$document_upload_field = new FileUploadField('NewsDocument', 'News Document');
+		$document_upload_field->setUploadFolder(self::$file_upload_folder);
 		
 		$fields = parent::getCMSFields();
 		
@@ -44,10 +48,17 @@ class NewsPage extends Page {
 			$to_date_field,
 			$place_before = 'Content'
 		);
+		$fields->addFieldToTab(
+			$tab = 'Root.Content.Main',
+			$document_upload_field
+		);
 		return $fields;
 	}
 	public function DateAndTitle() {
 		return $this->FromDate . ' - ' . $this->Title;
+	}
+	public function SetFileUploadFolder($folder_name) {
+		self::$file_upload_folder = $folder_name;
 	}
 	public function InternationalDate($DateDBName = 'FromDate') {
 		$date_obj = $this->dbObject($DateDBName);
