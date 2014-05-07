@@ -15,5 +15,7 @@ public function NewsWidget() {
 To include the news widget, add this to the template:
 $NewsWidget
 
+DataObject::add_extension('HomePage', 'NewsList');
+
 
 

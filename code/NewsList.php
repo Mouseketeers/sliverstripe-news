@@ -20,21 +20,24 @@ class NewsList extends DataObjectDecorator {
 		);
 	}
 	function updateCMSFields(&$fields){
+		$fields->addFieldsToTab( 'Root.Content.News', array(
+			new CheckboxField('ShowNewsList','Show news list'),
+			new TextField('NewsListHeadline', 'Headline (e.g. Latest news)'),
+			new TextField('NewsListLength', 'Number of news to list'),
+			new TextField('NewsListNoNewsMessage', 'Message to show when there are no news')
+		));
 		$newSections = DataObject::get('NewsSection');
-		if($newSections) {
-			$fields->addFieldsToTab( 'Root.Content.News', array(
-				new CheckboxField('ShowNewsList','Show news list'),
-				new TextField('NewsListHeadline', 'Headline (e.g. Latest news)'),
-				new TextField('NewsListLength', 'Number of news to list'),
-				new TextField('NewsListNoNewsMessage', 'Message to show when there are no news'),
+		if($newSections->exists() && $newSections->Length > 0) {
+			$fields->addFieldToTab(
+				'Root.Content.News',
 				new CheckboxSetfield(
 					'NewsSections',
 					'Exclude the following news sections',
 					$newSections->toDropdownMap('ID','Title')
 				)
-			));
-			return $fields;
+			);
 		}
+		return $fields;
 	}
 	public function News() {
 		$where = '(FromDate IS NULL OR FromDate <= NOW()) AND (ToDate IS NULL OR ToDate >= NOW())';
